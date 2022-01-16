@@ -238,20 +238,48 @@ const arr=[2,5,6,3,4,9,7,10];
 
 // javscript -> asynchronous event driven architecture
 
-function  asynChronous() {
-    setTimeout(()=>{
-        console.log("I am first")
-    },500)
+// function  asynChronous() {
+//     setTimeout(()=>{
+//         console.log("I am first")
+//     },500)
 
-    setTimeout(()=>{
-        console.log("I am second")
-    },500)
+//     setTimeout(()=>{
+//         console.log("I am second")
+//     },500)
 
-    console.log("I am third");
+//     console.log("I am third");
     
+// }
+
+
+// asynChronous();
+
+let person={
+    name:"sadab",
+    address:{
+        country:"india",
+        state:"U.P"
+    },
+    age: 25,
+    hobeis:["cricket","coding","engaging with friends"]
 }
 
-asynChronous();
+// person.name="test"
+
+// console.log(person);
+
+// destructuring
+// const {name,address:{state},age,hoobeis}=person;
+
+function smartFunc({name,address,hobeis}) {
+    // console.log(name,address)
+    name="test"
+    address.name="kamran"
+    hobeis.pop();
+}
+
+smartFunc(person)
+console.log(person.address,person.hobeis);
 
 
 
