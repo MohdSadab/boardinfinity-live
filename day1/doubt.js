@@ -280,6 +280,4 @@ function smartFunc({name,address,hobeis}) {
 
 smartFunc(person)
 console.log(person.address,person.hobeis);
-
-
-
+console.log(isNaN());
