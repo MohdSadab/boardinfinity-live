@@ -1,0 +1,149 @@
+*{
+    /* color:violet; */
+    font-family: sans-serif;
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* h1,h2,h3,span{
+    background-color: rgb(12, 12, 247);
+    color: white;
+} */
+
+.heading-2{
+    font-size:16px;
+    color: green;
+    border: 1px solid red;
+    /* padding-left:10px;
+    padding-right:10px; */
+
+    /* margin-top:10px; */
+    /* padding: 10px; */
+    /* margin: 20px; */
+}
+
+.heading{
+    font-size:18px;
+    font-weight:bold;
+    color: green;
+}
+
+/* div{
+    color:red;
+} */
+
+#id-selector{
+    font-size:14px;
+    font-weight:bold;
+    color: blue !important;
+}
+
+
+body{
+    /* background-image: url('https://media.geeksforgeeks.org/wp-content/cdn-uploads/20220120222017/Top-10-Software-Testing-Trends-To-Follow-in-2022.png');
+    /* background-repeat: repeat-x; */
+    /* background-repeat: repeat-y; */
+    /* background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: cover;  */
+    height: 100vh;
+}
+/* .list > .list__item{
+    color: blue;
+} */
+
+/* 
+    ul.list means select all the ul tag which have list class ( ul.list) 
+    (> .list__item) inside ul.list select all the elements which have list__item class
+*/
+ul.list > .list__item{
+    color: blue;
+}
+
+.btn{
+    padding: 10px 20px 10px 20px;
+    color: white;
+    background-color: purple;
+    border: 1px solid black;
+    border-radius: 2px;
+    width: 300px;
+    cursor: pointer;
+}
+
+
+nav{
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+.nav-items{
+    padding: 20px 20px;
+    list-style: none;
+}
+
+.nav-items__item{
+    display: inline-block;
+    color: #777;
+    font-size: 15px;
+    cursor: pointer;
+    width:80px;
+}
+
+.jumbotron{
+    width:100%;
+    height: 300px;
+    overflow: hidden; /*if child exceed the given height it will be hidden */
+}
+
+.jumbotron__img{
+    width: 100%;
+    /* height: 200px; */
+}
+
+.coll_heading{
+    color: black;
+    font-size: 28px;
+    padding: 20px 20px;
+    background: #f7f7f7;
+}
+
+.card{
+    width: 300px;
+    max-height: 500px;
+    border: 1px solid #ebe3e3;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    display: inline-block;
+}
+
+.card__image{
+    width: 100%;
+    max-width:300px;
+    max-height: 200px;
+}
+
+.card__body{
+   padding: 10px;
+}
+
+.card__title{
+    color: #777;
+    margin: 10px 0px;
+}
+
+.card__description{
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+    /* word-wrap: break-word; */
+}
+
+.card__price{
+    font-size: 14px;
+    font-weight: bold;
+}
