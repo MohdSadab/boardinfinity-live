@@ -1,0 +1,116 @@
+/* 
+last time position layout
+table layout
+flex layout
+*/
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.box{
+    border: 2px solid green;
+    padding: 20px 20px;
+    line-height: 50px;
+    margin: 10px;
+    /* flex-grow: 1;
+    flex-shrink:1; */
+    
+}
+
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-content: space-around ;
+    /* flex-direction: row;
+    flex-wrap: wrap-reverse; */
+    /* flex-flow: row wrap; */
+
+    /* justify-content: center; */
+    /* align-items: baseline; */
+    /* justify-content: center; */
+    height: 100vh;
+    
+}
+
+.item-5{
+    line-height: 80px;
+}
+
+.item-1{
+    line-height: 60px;
+}
+
+.item-3{
+    /* flex-basis: 300px; */
+    /* flex: 1 1 200px; */
+    /* align-self: center; */
+}
+
+/* 
+containers properties
+flex-direction: (column,row(default), row-reverse, column-reverse);
+flex-wrap: wrap,nowrap,wrap-reverse
+flex-flow: (short hand notation of flex-direction,flex-wrap)
+justify-content : (center,space-around,space-between, flex-start, flex-end) adjust items according to flex-direction 
+if flex-direction is row then row if col then col);
+
+align-items: (center,flex-start,flex-end, stretch(default)) according to cross-axis
+*/
+
+/* 
+flex items properties
+order: set the order of items least order come first default order is 0;
+flex-grow: on resizing it grows with the given value default is 0;
+flex-shrink: on resizing it shrink with the given value default is 0;
+flex-basis: sets initial width of flex item
+
+flex: grow shrink flex-basis (shorthand notation)
+*/
+
+*{
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.navigation{
+    display: flex;
+    line-height: 30px;
+    background: #e7e7e7;
+    color: black;
+    width: 100%;
+    position: sticky;
+    top: 0px;
+}
+
+.nav-items{
+    padding: 10px 20px;
+}
+
+.card{
+    background: grey;
+    height: 200px;
+    width: 40%;
+    margin: 10px;
+}
+
+
+@media (max-width:600px) {
+    .navigation{
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    .card{
+       width: 28%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .card{
+       width: 25%;
+    }
+}
