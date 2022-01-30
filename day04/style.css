@@ -1,0 +1,189 @@
+*{
+    box-sizing: border-box;  /* default content-box exclude the padding and border in width calculation*/
+                            /* default border-box include the padding and border in width calculation*/
+
+    padding:0px;
+    margin: 0px;
+}
+.footer{
+    width:100%;
+}
+
+.item{
+    display: inline-block;
+    width:33%;
+    border: 1px solid blue;
+    height: 200px;
+}
+
+/* combinators descenders > + ~ */
+
+/* selects all the descendent (inner element) of p */
+div.parent p{
+    background-color: green;
+    color: white;
+}
+
+div.parent-2>p{
+    background-color: blue;
+    color: white;
+}
+
+/* div + p{
+    background-color: indigo;
+    color: white;
+} */
+
+div ~ p{
+    background-color: indigo;
+    color: white;
+}
+
+/* pseudo selector */
+
+.item:hover{
+    background-color: indigo;
+    color:white;
+}
+
+
+.item:not(:nth-child(2n)){
+    background-color: aqua;
+}
+
+
+
+/* .item:nth-child(2n+1){
+    background-color: red;
+} */
+
+/* 
+by default browser uses static positioning;
+
+1-> static (default)
+2-> relative
+3-> fixed 
+4-> absolute
+5-> sticky (combination relative+ fixed)
+
+*/
+
+/* div{
+    display: inline-block;
+} */
+/* .parent{
+    position: relative;
+    height: 800px;
+    width: 800px;
+    border: 5px solid blue;
+    top:100px;
+    left: 200px;
+    padding-bottom: 2000px;
+}
+
+.parent-box{
+    position: relative;
+    height: 500px;
+    width: 500px;
+    border: 5px solid red;
+    top:100px;
+    left: 200px;
+    padding-bottom: 2000px;
+} */
+
+
+
+/* .child-box{
+
+    height: 300px;
+    width: 300px;
+    border: 5px solid green; 
+    position: relative; //positioned element with respect to initial position 
+    top: 100px;
+    left: 200px;
+} */
+
+/* .child-box{
+
+    height: 300px;
+    width: 300px;
+    border: 5px solid green; 
+    position: fixed;  positioned element with respect to view port no relation with parent and initial position
+    top: 0px;
+    left: 0px;
+}
+*/
+
+/* .child-box{
+
+    height: 300px;
+    width: 300px;
+    border: 5px solid green;  */
+   /* position: absolute;   position relative to first non static element if not found then take position relative to body tag*/
+    /* top: 0px;
+    left: 0px;
+} */
+
+/* .child-box{
+
+    height: 300px;
+    width: 300px;
+    border: 5px solid green; 
+    position: sticky; 
+    top: 0px;     positioned element with respect to view port no relation with parent and initial position
+}  */
+
+/* * {
+    box-sizing: border-box;
+  }
+
+  dl{
+      padding-bottom: 2000px;
+  }
+  
+  dl > div {
+    background: #FFF;
+    padding: 24px 0 0 0;
+  }
+  
+  dt {
+    background: #B8C1C8;
+    border-bottom: 1px solid #989EA4;
+    border-top: 1px solid #717D85;
+    color: #FFF;
+    font: bold 18px/21px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+  }
+  
+  dd {
+    font: bold 20px/45px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+  }
+  
+  dd + dd {
+    border-top: 1px solid #CCC;
+  } */
+
+  .nav{
+      background-color: green;
+      width: 100%;
+      height: 70px;
+      position: sticky;
+      top: 10px;
+  }
+
+  .nav>div{
+    padding-bottom: 2000px;
+  }
+
+  .body{
+      padding-bottom: 2000px;
+  }
+
+  
