@@ -101,6 +101,7 @@
 //  2 array merging 
 
 // quiz app build
+// question list
 // random question (user see the question at most once)
 // track the history of user marked answer
 // in last you need to print which answer is correct and wrong 
@@ -108,51 +109,124 @@
 // if 60 second pass then next question will come
 // load the question from api 
 
-[
-    {
-        "queId":1,
-        "question":"shhdhd",
-        "answer":[
-            {
-                "id":1,
-                "value":"sjjs"
-            }
-        ],
-        "correct":1
-    },
-    {
-        "queId":1,
-        "question":"shhdhd",
-        "answer":[
-            {
-                "id":1,
-                "value":"sjjs"
-            }
-        ],
-        "correct":1
-    },
-    {
-        "queId":1,
-        "question":"shhdhd",
-        "answer":[
-            {
-                "id":1,
-                "value":"sjjs"
-            }
-        ],
-        "correct":1
-    },
-    {
-        "queId":1,
-        "question":"shhdhd",
-        "answer":[
-            {
-                "id":1,
-                "value":"sjjs"
-            }
-        ],
-        "correct":1
+// [
+//     {
+//         "queId":1,
+//         "question":"shhdhd",
+//         "answer":[
+//             {
+//                 "id":1,
+//                 "value":"sjjs"
+//             }
+//         ],
+//         "correct":1
+//     },
+//     {
+//         "queId":1,
+//         "question":"shhdhd",
+//         "answer":[
+//             {
+//                 "id":1,
+//                 "value":"sjjs"
+//             }
+//         ],
+//         "correct":1
+//     },
+//     {
+//         "queId":1,
+//         "question":"shhdhd",
+//         "answer":[
+//             {
+//                 "id":1,
+//                 "value":"sjjs"
+//             }
+//         ],
+//         "correct":1
+//     },
+//     {
+//         "queId":1,
+//         "question":"shhdhd",
+//         "answer":[
+//             {
+//                 "id":1,
+//                 "value":"sjjs"
+//             }
+//         ],
+//         "correct":1
+//     }
+// ]
+
+// const history=[
+//     {
+//         questionId:1,
+//         status: ("marked"/"skip"/"timeout"),
+//         answerId: 1
+//     }
+// ]
+
+class UI{
+    // instance will not creted
+
+    // {class:"mt-5 form-control",id:"1"}
+    static createElement(type,text,attributes={}){
+        const elem =document.createElement(type);
+        if(text){
+            elem.innerText=text;
+        }
+       
+        Object.keys(attributes).forEach(key=>{
+            elem.setAttribute(key,attributes[key])
+        })   
+        return elem;
     }
 
+    static appendToParent(parent,elem){
+        parent.appendChild(elem)
+    }
 
-]
+}
+
+
+
+// const elem = UI.createElement('div', 'Hello World',{'class':'mt-5 container','id':'list'})
+// const elem2 = UI.createElement('div', 'Hello Worldsdhdhhd',{'id':'list'})
+// const elem3 = UI.createElement('div', 'Hello World djdjdjjd',{'id':'list'})
+// UI.appendToParent(document.getElementById("root"), elem)
+// UI.appendToParent(document.getElementById("root"), elem2)
+// UI.appendToParent(document.getElementById("root"), elem3)
+
+class Storage{
+
+    // insert
+    static key = 'todos'
+    static addItem(item){
+        // localstorage we can not store anything except string
+        let prevItem = Storage.getTodoList() || [];
+        prevItem.push(item);
+        prevItem =JSON.stringify(prevItem)
+        localStorage.setItem(Storage.key, prevItem);
+
+    }
+
+    static getTodoList(){
+        const items = localStorage.getItem(Storage.key)
+        return JSON.parse(items)
+    }
+    
+    static clearTodoList(){
+        localStorage.clear()
+    }
+}
+
+// Storage.addItem({'id':1,"title":"i am to do 1"})
+// Storage.addItem({'id':1,"title":"i am to do 1"})
+// Storage.addItem({'id':1,"title":"i am to do 1"})
+
+let arr=[];
+console.log(Storage.getTodoList())
+
+// quiz app
+// UI
+// storage
+
+// 
