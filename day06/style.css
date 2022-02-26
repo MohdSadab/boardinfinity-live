@@ -1,0 +1,93 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.child{
+    border:2px solid yellow;
+    background-color: tomato;
+    /* height: 100px; */
+}
+
+.parent{
+    display: grid;
+    /* grid-template-columns:1fr;   create three column grid middle one takes twice space as compare to others
+    grid-column-gap: 10px ;*/
+    grid-auto-rows: 100px; 
+    grid-template-areas: "nav nav"
+                        "main news"
+                        "footer footer";
+
+    grid-template-rows: 50px 500px 50px;
+    grid-template-columns: 3fr 1fr;
+
+}
+
+/* .one{
+    grid-row-start: 1;
+    grid-row-end: 3; */
+    /* grid-row: 1 / 3;
+    background-color: aqua;
+}
+.two{
+    background-color: blue;
+}
+.three{
+    background-color: red;
+}
+.four{ 
+    background-color: firebrick; 
+    /* grid-column-start:1 ;
+    grid-column-end: 3 ; */
+    /* grid-column: 1 / 3; */
+    /* grid-column: span 2;
+}
+
+.five{
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 3 ;
+    grid-column-end: 4 ;
+    background-color: purple;
+} */
+
+/* 
+properties of grid parent
+grid-template-columns: 200px 200px 200px;
+(create three columns each column have 200px size);
+grid-column-gap: 10px ; (create gaps between grid item column);
+ grid-auto-rows: 100px;   sets default height of the grid items
+*/
+
+/* grid tracks is space between two lines */
+
+.nav{
+    grid-area: nav;
+}
+
+.main{
+    grid-area: main;
+}
+
+
+.news{
+    grid-area: news;
+    background-color: blue;
+}
+
+.footer{
+    grid-area: footer;
+}
+
+
+
+@media (max-width: 1000px) {
+    .parent {
+        grid-template-rows:50px 500px 100px 50px;
+        grid-template-areas: "nav"
+                            "news"
+                            "main"
+                            "footer";
+        grid-template-columns: 1fr;
+    }
+}

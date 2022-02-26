@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- <div onclick="eventDetail(event,'i am last')">
+        I am last 
+        <div onclick="eventDetail(event,'i am first')">
+                I am first
+        </div>
+    </div> -->
+		<!-- <div class="event-capturing-1">
+        I am last 
+        <div class="event-capturing-2">
+                I am first
+        </div>
+    </div> -->
+		<!-- we take input from user -->
+        <!-- action="https://www.w3schools.com/action_page.php" -->
+        <div class="msg"></div>
+		<form onsubmit="return validateform(event)"  method="post">
+			<label for="username">Username</label><br />
+			<input
+				class="username"
+				type="text"
+				id="username"
+				name="fname"
+				onchange="console.log(event.target.value);"
+			/><br />
+            <textarea placeholder="i am text area"></textarea>
+            <!-- <input
+				class="username"
+				type="color"
+				id="username"
+				name="color"
+				onchange="console.log(event.target.value);"
+			/> -->
+            <!-- <input
+				class="username"
+				type="number"
+				id="username"
+				name="color"
+				onchange="console.log(event.target.value);"
+			/><br>
+            <input
+				class="username"
+				type="checkbox"
+				id="username"
+				name="color"
+				onchange="console.log(event.target.value);"
+			/> -->
+			<label for="passw">Password</label><br />
+			<input
+				class="password"
+				type="password"
+				id="passw"
+                name="pwd"
+				onchange="console.log(event.target.value);"
+			/><br />
+
+            <select name="select" id="">
+                <option value="1">Volvo</option>
+                <option value="2">Nexa</option>
+            </select>
+
+			<input type="submit" value="Submit" />
+		</form>
+		<script src="script.js"></script>
+	</body>
+</html>
