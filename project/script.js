@@ -164,16 +164,73 @@
 //     }
 // ]
 
+// Storage.addItem({'id':1,"title":"i am to do 1"})
+// Storage.addItem({'id':1,"title":"i am to do 1"})
+
+// let arr=[];
+// console.log(Storage.getTodoList())
+
+// quiz app
+// UI
+// storage
+
+// user create todo (startDate , endDate)
+/**
+[
+{
+    "study":[
+        {
+            "id":1,
+            "title":"My first todo",
+            "status":"pending/completed"
+        }
+    ],
+    "startDate":"",
+    "expiredAt":"",
+    "status":"pending/completed/expired"
+},
+{
+    "name":""
+    "items":[
+        {
+            "id":1,
+            "title":"My first todo",
+            "status":"pending/completed"
+        }
+    ],
+    "startDate":"",
+    "expiredAt":"",
+    "status":"pending/completed/expired"
+}
+]
+ */
+
+
+// const elem = UI.createElement('div', 'Hello World',{'class':'mt-5 container','id':'list'})
+// const elem2 = UI.createElement('div', 'Hello Worldsdhdhhd',{'id':'list'})
+// const elem3 = UI.createElement('div', 'Hello World djdjdjjd',{'id':'list'})
+// UI.appendToParent(document.getElementById("root"), elem)
+// UI.appendToParent(document.getElementById("root"), elem2)
+// UI.appendToParent(document.getElementById("root"), elem3)
+
+
 class UI{
     // instance will not creted
 
     // {class:"mt-5 form-control",id:"1"}
-    static createElement(type,text,attributes={}){
+    static createElement(type,innerHtml,attributes={}){
         const elem =document.createElement(type);
-        if(text){
-            elem.innerText=text;
+        if(innerHtml){
+            elem.innerHTML=innerHtml;
         }
        
+        // [class,id,src]
+        //    attributes= {
+        //         "class":"mt-5",
+        //         "id":"mt",
+        //    }
+        //    [class,id].
+        //   <div class="id"></div>
         Object.keys(attributes).forEach(key=>{
             elem.setAttribute(key,attributes[key])
         })   
@@ -184,16 +241,30 @@ class UI{
         parent.appendChild(elem)
     }
 
+    static removeElement(selector){
+        const elem = document.querySelector(selector);
+        if(elem)
+            elem.remove();
+    }
+
+    static addEventListener(selector,cb){
+        const elem = document.querySelector(selector);
+        if(elem){
+            elem.addEventListener('click',cb)
+        }
+    }
+
+    static removeEventListener(selector,cb){
+        const elem = document.querySelector(selector);
+        if(elem){
+            elem.removeEventListener('click',cb)
+        }
+    }
+
+    static getElement(selector){
+        return document.querySelector(selector)
+    }
 }
-
-
-
-// const elem = UI.createElement('div', 'Hello World',{'class':'mt-5 container','id':'list'})
-// const elem2 = UI.createElement('div', 'Hello Worldsdhdhhd',{'id':'list'})
-// const elem3 = UI.createElement('div', 'Hello World djdjdjjd',{'id':'list'})
-// UI.appendToParent(document.getElementById("root"), elem)
-// UI.appendToParent(document.getElementById("root"), elem2)
-// UI.appendToParent(document.getElementById("root"), elem3)
 
 class Storage{
 
@@ -201,7 +272,7 @@ class Storage{
     static key = 'todos'
     static addItem(item){
         // localstorage we can not store anything except string
-        let prevItem = Storage.getTodoList() || [];
+        let prevItem = Storage.getTodoList();
         prevItem.push(item);
         prevItem =JSON.stringify(prevItem)
         localStorage.setItem(Storage.key, prevItem);
@@ -210,23 +281,104 @@ class Storage{
 
     static getTodoList(){
         const items = localStorage.getItem(Storage.key)
-        return JSON.parse(items)
+        return JSON.parse(items) || []
     }
     
     static clearTodoList(){
         localStorage.clear()
     }
+
+    
+}
+// document.addEventListener('DOM', listener)
+
+class Todos{
+
+    // help to show the previous data created by the users called when javascript loaded
+
+    static addTodoInRealDom(item){
+        const childElem = `
+                             <div class="d-flex justify-content-between me-5 mb-2 ">
+                                <h3 class="ms-5 mt-1">${item.name}</h3>
+                                <div>
+                                    <span class="badge bg-success">
+                                        ${item.status}
+                                    </span>
+                                    <button class="btn btn-danger ms-2" 
+                                            id="todo-delete"
+                                            data-val='${item.name}'
+                                            >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            `
+        const elem = UI.createElement('div',childElem,{'class':'todo-item'});
+        UI.appendToParent(document.querySelector("#todos"), elem);
+    }
+
+    static listTodos(){
+
+        const todos = Storage.getTodoList(Storage.key);
+        todos.forEach(item=>{
+            Todos.addTodoInRealDom(item)
+        })
+    }
+
+    static addTodo(){
+       const value = UI.getElement('#todo-input').value;
+
+       const todo = {
+        "name":value,
+        "items":[],
+        "startDate":new Date(),
+        "expiredAt":new Date(+new Date() + 60000*15),
+        "status":"Pending"
+       }
+       Todos.addTodoInRealDom(todo)
+       Storage.addItem(todo)
+    }
+
+    static openForm(){
+        UI.removeElement('#addTodoForm')
+        // it is optimization 
+        UI.removeEventListener('#submit',Todos.addTodo)
+        const innerHtml = `
+            <div class="mx-5">
+            <label for="todo-input">Todo</label>
+            <input type="text" placeholder="Name"  id="todo-input" class="form-control my-3 "/>
+            <button class="btn btn-primary" id="submit">Add</button> 
+            </div>
+        `
+        const elem = UI.createElement('div', innerHtml,{id:"addTodoForm"})
+        UI.appendToParent(document.querySelector("#root"), elem)
+        UI.addEventListener('#submit',Todos.addTodo)
+    }
+    
+
+    static removeTodo(name){
+        // filter returns new array;
+        let arr = Storage.getTodoList(Storage.key).filter(function(item){
+            return item.name!==name
+        });
+        arr= JSON.stringify(arr);
+        localStorage.setItem(Storage.key, arr);
+    }
+
+    static deleteTodo(event){
+        const target = event.target;
+        if(target.getAttribute("id") === "todo-delete"){
+            target.parentElement.parentElement.remove();
+            console.log("id  is",target.getAttribute('data-val'))
+            Todos.removeTodo(target.getAttribute('data-val'))
+        }
+    }
+
+
 }
 
-// Storage.addItem({'id':1,"title":"i am to do 1"})
-// Storage.addItem({'id':1,"title":"i am to do 1"})
-// Storage.addItem({'id':1,"title":"i am to do 1"})
+window.addEventListener('load', (event)=>{
+    Todos.listTodos();
+})
 
-let arr=[];
-console.log(Storage.getTodoList())
-
-// quiz app
-// UI
-// storage
-
-// 
