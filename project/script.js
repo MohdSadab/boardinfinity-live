@@ -47,7 +47,7 @@
 //             .then(json => console.log(json))
 //         },x*1000)
 //     }
-    
+
 //     print(i);
 // }
 
@@ -214,16 +214,16 @@
 // UI.appendToParent(document.getElementById("root"), elem3)
 
 
-class UI{
+class UI {
     // instance will not creted
 
     // {class:"mt-5 form-control",id:"1"}
-    static createElement(type,innerHtml,attributes={}){
-        const elem =document.createElement(type);
-        if(innerHtml){
-            elem.innerHTML=innerHtml;
+    static createElement(type, innerHtml, attributes = {}) {
+        const elem = document.createElement(type);
+        if (innerHtml) {
+            elem.innerHTML = innerHtml;
         }
-       
+
         // [class,id,src]
         //    attributes= {
         //         "class":"mt-5",
@@ -231,77 +231,83 @@ class UI{
         //    }
         //    [class,id].
         //   <div class="id"></div>
-        Object.keys(attributes).forEach(key=>{
-            elem.setAttribute(key,attributes[key])
-        })   
+        Object.keys(attributes).forEach(key => {
+            elem.setAttribute(key, attributes[key])
+        })
         return elem;
     }
 
-    static appendToParent(parent,elem){
+    static appendToParent(parent, elem) {
         parent.appendChild(elem)
     }
 
-    static removeElement(selector){
+    static removeElement(selector) {
         const elem = document.querySelector(selector);
-        if(elem)
+        if (elem)
             elem.remove();
     }
 
-    static addEventListener(selector,cb){
+    static addEventListener(selector, cb) {
         const elem = document.querySelector(selector);
-        if(elem){
-            elem.addEventListener('click',cb)
+        if (elem) {
+            elem.addEventListener('click', cb)
         }
     }
 
-    static removeEventListener(selector,cb){
+    static removeEventListener(selector, cb) {
         const elem = document.querySelector(selector);
-        if(elem){
-            elem.removeEventListener('click',cb)
+        if (elem) {
+            elem.removeEventListener('click', cb)
         }
     }
 
-    static getElement(selector){
+    static getElement(selector) {
         return document.querySelector(selector)
     }
 }
 
-class Storage{
+class Storage {
 
     // insert
     static key = 'todos'
-    static addItem(item){
+    static doneKey = 'doneTodo'
+    static addItem(item, key = Storage.key) {
         // localstorage we can not store anything except string
-        let prevItem = Storage.getTodoList();
+        let prevItem = Storage.getTodoList(key);
         prevItem.push(item);
-        prevItem =JSON.stringify(prevItem)
-        localStorage.setItem(Storage.key, prevItem);
+        prevItem = JSON.stringify(prevItem)
+        localStorage.setItem(key, prevItem);
 
     }
 
-    static getTodoList(){
-        const items = localStorage.getItem(Storage.key)
+    static getTodoList(key = Storage.key) {
+        const items = localStorage.getItem(key)
         return JSON.parse(items) || []
     }
-    
-    static clearTodoList(){
+
+    static clearTodoList() {
         localStorage.clear()
     }
 
-    
+
+
 }
 // document.addEventListener('DOM', listener)
 
-class Todos{
+class Todos {
 
     // help to show the previous data created by the users called when javascript loaded
 
-    static addTodoInRealDom(item){
+    static addTodoInRealDom(item) {
+        const copyItem = JSON.stringify(item)
         const childElem = `
                              <div class="d-flex justify-content-between me-5 mb-2 ">
                                 <h3 class="ms-5 mt-1">${item.name}</h3>
                                 <div>
-                                    <span class="badge bg-success">
+                                <p hidden class="itemDetails">
+                                    ${copyItem}
+                                </p>
+                                    <span class="badge bg-danger">
                                         ${item.status}
                                     </span>
                                     <button class="btn btn-danger ms-2" 
@@ -314,36 +320,70 @@ class Todos{
                             </div>
                             
                             `
-        const elem = UI.createElement('div',childElem,{'class':'todo-item'});
+        const elem = UI.createElement('div', childElem, { 'class': 'todo-item' });
         UI.appendToParent(document.querySelector("#todos"), elem);
     }
 
-    static listTodos(){
+    static addDoneTodoInRealDom(item) {
+        const copyItem = JSON.stringify(item)
+        const childElem = `
+                             <div class="d-flex justify-content-between me-5 mb-2 ">
+                                
+                                <h3 class="ms-5 mt-1">${item.name}</h3>
+                                <div>
+                                    <p hidden class="itemDetails">
+                                        ${copyItem}
+                                    </p>
+                                    <span class="badge bg-success">
+                                        ${item.status}
+                                    </span>
+                                    <button class="btn btn-danger ms-2" 
+                                            id="done-todo-delete"
+                                            data-val='${item.name}'
+                                            >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            `
+        const elem = UI.createElement('div', childElem, { 'class': 'todo-item' });
+        UI.appendToParent(document.querySelector("#doneTodos"), elem);
+    }
+
+    static listTodos() {
 
         const todos = Storage.getTodoList(Storage.key);
-        todos.forEach(item=>{
+        todos.forEach(item => {
             Todos.addTodoInRealDom(item)
         })
     }
 
-    static addTodo(){
-       const value = UI.getElement('#todo-input').value;
-
-       const todo = {
-        "name":value,
-        "items":[],
-        "startDate":new Date(),
-        "expiredAt":new Date(+new Date() + 60000*15),
-        "status":"Pending"
-       }
-       Todos.addTodoInRealDom(todo)
-       Storage.addItem(todo)
+    static listDoneTodos() {
+        const todos = Storage.getTodoList(Storage.doneKey);
+        todos.forEach(item => {
+            Todos.addDoneTodoInRealDom(item)
+        })
     }
 
-    static openForm(){
+    static addTodo() {
+        const value = UI.getElement('#todo-input').value;
+
+        const todo = {
+            "name": value,
+            "items": [],
+            "startDate": new Date(),
+            "expiredAt": new Date(+new Date() + 60000 * 15),
+            "status": "Pending"
+        }
+        Todos.addTodoInRealDom(todo)
+        Storage.addItem(todo)
+    }
+
+    static openForm() {
         UI.removeElement('#addTodoForm')
         // it is optimization 
-        UI.removeEventListener('#submit',Todos.addTodo)
+        UI.removeEventListener('#submit', Todos.addTodo)
         const innerHtml = `
             <div class="mx-5">
             <label for="todo-input">Todo</label>
@@ -351,34 +391,51 @@ class Todos{
             <button class="btn btn-primary" id="submit">Add</button> 
             </div>
         `
-        const elem = UI.createElement('div', innerHtml,{id:"addTodoForm"})
+        const elem = UI.createElement('div', innerHtml, { id: "addTodoForm" })
         UI.appendToParent(document.querySelector("#root"), elem)
-        UI.addEventListener('#submit',Todos.addTodo)
+        UI.addEventListener('#submit', Todos.addTodo)
     }
-    
 
-    static removeTodo(name){
+
+    static removeTodo(name,key=Storage.key) {
         // filter returns new array;
-        let arr = Storage.getTodoList(Storage.key).filter(function(item){
-            return item.name!==name
+        let arr = Storage.getTodoList(key).filter(function (item) {
+            return item.name !== name
         });
-        arr= JSON.stringify(arr);
-        localStorage.setItem(Storage.key, arr);
+        arr = JSON.stringify(arr);
+        localStorage.setItem(key, arr);
     }
 
-    static deleteTodo(event){
+    static deleteTodo(event) {
         const target = event.target;
-        if(target.getAttribute("id") === "todo-delete"){
+        if (target.getAttribute("id") === "todo-delete") {
             target.parentElement.parentElement.remove();
-            console.log("id  is",target.getAttribute('data-val'))
             Todos.removeTodo(target.getAttribute('data-val'))
+        }
+        else if (target.getAttribute("id") === "done-todo-delete") {
+            target.parentElement.parentElement.remove();
+            Todos.removeTodo(target.getAttribute('data-val'),Storage.doneKey)
+        }
+        else if (target.getAttribute('class') && target.getAttribute('class').includes('badge')) {
+            const item = JSON.parse(target.parentElement.querySelector('.itemDetails').innerText)
+            target.parentElement.parentElement.remove();
+            const key = target.getAttribute('class').includes('bg-success')? Storage.doneKey : Storage.key
+            Todos.removeTodo(item.name,key)
+            item.status = key=== Storage.doneKey? 'pending' : 'done'
+            const addKey = key=== Storage.doneKey? Storage.key: Storage.doneKey
+            Storage.addItem(item, addKey)
+            if(addKey===Storage.doneKey)
+                Todos.addDoneTodoInRealDom(item)
+            else
+                Todos.addTodoInRealDom(item)
         }
     }
 
 
 }
 
-window.addEventListener('load', (event)=>{
+window.addEventListener('load', (event) => {
     Todos.listTodos();
+    Todos.listDoneTodos();
 })
 
